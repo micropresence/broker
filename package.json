@@ -1,0 +1,30 @@
+{
+    "name": "@micropresence/broker",
+    "version": "0.1.2",
+    "author": "Juri Wiens <juri.wiens@gmail.com>",
+    "license": "MIT",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "scripts": {
+        "start": "node build/startExample.js",
+        "start:dev": "ts-node src/startExample.ts | pino -l",
+        "build": "rm -rf ./build && tsc --sourceMap false",
+        "prepublishOnly": "yarn build"
+    },
+    "engines": {
+        "node": ">=10"
+    },
+    "devDependencies": {
+        "@types/uuid": "^3.4.3",
+        "@types/ws": "^5.1.1",
+        "prettier": "^1.13.0",
+        "ts-node": "^6.0.5",
+        "typescript": "^2.9.1"
+    },
+    "dependencies": {
+        "fastify": "^1.5.0",
+        "pino": "^4.17.2",
+        "uuid": "^3.2.1",
+        "ws": "^5.2.0"
+    }
+}
