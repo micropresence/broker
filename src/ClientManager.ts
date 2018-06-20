@@ -1,4 +1,4 @@
-import {EventEmitter} from "events";
+import Emittery from "emittery";
 import WebSocket from "ws";
 import uuid from "uuid";
 
@@ -10,14 +10,13 @@ export interface Client {
     authToken: string;
 }
 
-export enum Event {
-    Registration = "registration",
-    Close = "close",
-    Error = "error"
+interface Events {
+    registration: Client;
+    close: {code: any; number: any; client?: Client};
+    error: {error: Error; client?: Client};
 }
 
-export class ClientManager extends EventEmitter {
-    static Event = Event;
+export class ClientManager extends Emittery.Typed<Events> {
     private static instance: ClientManager;
 
     private clientsByConnection: Map<WebSocket, Client> = new Map();
@@ -54,11 +53,11 @@ export class ClientManager extends EventEmitter {
                 this.clientsByConnection.delete(connection);
                 this.clientsByRedirectHost.delete(client.redirectHost);
             }
-            this.emit(Event.Close, {code, number, client});
+            this.emit("close", {code, number, client});
         });
 
         connection.on("error", error => {
-            this.emit(Event.Error, {error, client: this.clientsByConnection.get(connection)});
+            this.emit("error", {error, client: this.clientsByConnection.get(connection)});
         });
     }
 
@@ -81,7 +80,7 @@ export class ClientManager extends EventEmitter {
         const client: Client = {redirectHost, connection, authToken};
         this.clientsByConnection.set(connection, client);
         this.clientsByRedirectHost.set(redirectHost, client);
-        this.emit(Event.Registration, client);
+        this.emit("registration", client);
         const ok: clientRegistration.Ok = {authToken};
         await messenger.send(channel, clientRegistration.MessageType.Ok, ok, dialogId);
         return ok;
