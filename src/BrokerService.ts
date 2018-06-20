@@ -7,6 +7,7 @@ import targetsRoutes from "./routes/targets";
 import {ClientManager} from "./ClientManager";
 
 export interface Config {
+    port: number;
     fastify?: Fastify.ServerOptions;
     pino?: Pino.LoggerOptions;
     wsServer?: WebSocket.ServerOptions;
@@ -30,13 +31,7 @@ export class BrokerService {
         this.clientManager.on(ClientManager.Event.Close, data => this.log.debug("close"));
     }
 
-    async start() {
-        try {
-            await this.fastify.listen(3000);
-            this.log.info("Broker started");
-        } catch (err) {
-            this.log.error(err);
-            process.exit(1);
-        }
+    async start(): Promise<void> {
+        await this.fastify.listen(this.config.port);
     }
 }
