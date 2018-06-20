@@ -9,7 +9,6 @@ import {ClientManager} from "./ClientManager";
 export interface Config {
     port: number;
     fastify?: Fastify.ServerOptions;
-    pino?: Pino.LoggerOptions;
     wsServer?: WebSocket.ServerOptions;
 }
 
@@ -23,10 +22,7 @@ export interface Config {
 
         this.wsServer.on("connection", connection => {
             this.clientManager.manage(connection);
-            connection.on("message", message => this.log.debug("message", message));
         });
-        this.clientManager.on(ClientManager.Event.Registration, data => this.log.debug("registration"));
-        this.clientManager.on(ClientManager.Event.Close, data => this.log.debug("close"));
     }
 
     async start(): Promise<void> {
