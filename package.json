@@ -15,17 +15,17 @@
         "node": ">=10"
     },
     "devDependencies": {
-        "@types/node": "^10.3.0",
+        "@types/node": "^10.3.4",
         "@types/uuid": "^3.4.3",
-        "@types/ws": "^5.1.1",
-        "prettier": "^1.13.0",
-        "ts-node": "^6.0.5",
-        "typescript": "^2.9.1"
+        "@types/ws": "^5.1.2",
+        "prettier": "^1.13.5",
+        "ts-node": "^6.1.1",
+        "typescript": "^2.9.2"
     },
     "dependencies": {
         "@micropresence/protocol": "^0.1.2",
-        "fastify": "^1.5.0",
-        "pino": "^4.17.2",
+        "emittery": "^0.4.0",
+        "fastify": "^1.6.0",
         "uuid": "^3.2.1",
         "ws": "^5.2.0"
     }
