@@ -13,13 +13,11 @@ export interface Config {
     wsServer?: WebSocket.ServerOptions;
 }
 
-export class BrokerService {
-    private fastify = Fastify(this.config.fastify);
-    private log = Pino(this.config.pino);
-    private wsServer = new WebSocket.Server({...this.config.wsServer, server: this.fastify.server});
-    private clientManager = ClientManager.getInstance();
+    readonly fastify = Fastify(this.config.fastify);
+    readonly wsServer = new WebSocket.Server({...this.config.wsServer, server: this.fastify.server});
+    readonly clientManager = ClientManager.getInstance();
 
-    constructor(private config: Config = {}) {
+    constructor(readonly config: Config) {
         this.fastify.register(catchAllRedirectRoute);
         this.fastify.register(targetsRoutes);
 
