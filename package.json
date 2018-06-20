@@ -1,6 +1,6 @@
 {
     "name": "@micropresence/broker",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "author": "Juri Wiens <juri.wiens@gmail.com>",
     "license": "MIT",
     "main": "build/index.js",
